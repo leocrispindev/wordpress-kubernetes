@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  worpress-deployment
+  namespace: microcontainers
+  labels:
+    app:  worpress
+    type: frontend
+spec:
+  selector:
+    matchLabels:
+      app: wordpress
+      type: frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app:  wordpress
+        type: frontend
+    spec:
+      # definindo e configurando o deploy da pod do wordpress
+      containers:
+      - name:  wordpress
+        image:  arm64v8/wordpress:5.8 # definindo a imagem do wordpress
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
+        livenessProbe: # garantindo que a pod estára UP quando estiver acesso na porta 80
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+          periodSeconds: 10
+        env:
+          - name: WORDPRESS_DB_HOST
+            value: mysql:3306
+          - name: WORDPRESS_DB_USER
+            value: useradmin
+          - name: WORDPRESS_DB_NAME
+            value: wordpress
+          - name: WORDPRESS_DB_PASSWORD # password por ser um dado sensível, a leitura é feita a partir do secret
+            valueFrom:
+              secretKeyRef:
+                name: database-secret
+                key: user-password
+        ports:
+        - containerPort:  80
+          name:  http-port
+        volumeMounts:
+          - mountPath: /var/www/html/
+            name: wordpress-storage
+      volumes:
+        - name: wordpress-storage
+          persistentVolumeClaim:
+            clainName: pv-clain-wordpress
+      restartPolicy: Always
