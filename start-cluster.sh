@@ -10,8 +10,10 @@ files=(
   "deployments/dp-mysql.yaml"
   "services/svc-mysql.yaml"
   "deployments/dp-wordpress.yaml"
+  "hpa/hpa-wordpress.yaml"
   "services/svc-wordpress.yaml"
 )
+kubectl create namespace microcontainers
 
 # Loop através do array e execute kubectl apply para cada arquivo
 for file in "${files[@]}"; do
@@ -21,5 +23,5 @@ for file in "${files[@]}"; do
   else
     echo "Arquivo $file não encontrado!"
   fi
-  sleep 3ß
+  sleep 3
 done
