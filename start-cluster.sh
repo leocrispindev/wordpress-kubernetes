@@ -4,8 +4,8 @@
 files=(
   "volumes/pv-mysql.yaml"
   "volumes/pv-wordpress.yaml"
-  "volumes/pv-clain-mysql.yaml"
-  "volumes/pv-clain-wordpress.yaml"
+  "volumes/pv-claim-mysql.yaml"
+  "volumes/pv-claim-wordpress.yaml"
   "secrets/database-secret.yaml"
   "deployments/dp-mysql.yaml"
   "services/svc-mysql.yaml"
@@ -21,4 +21,5 @@ for file in "${files[@]}"; do
   else
     echo "Arquivo $file não encontrado!"
   fi
+  sleep 3ß
 done
