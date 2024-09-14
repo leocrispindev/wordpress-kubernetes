@@ -21,7 +21,7 @@ spec:
       # definindo e configurando o deploy da pod do wordpress
       containers:
       - name:  wordpress
-        image:  arm64v8/wordpress:5.8 # definindo a imagem do wordpress
+        image: wordpress:5.8 # definindo a imagem do wordpress
         resources:
           requests:
             cpu: 100m
