@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name:  worpress-deployment
+  name:  wordpress-deployment
   namespace: microcontainers
   labels:
-    app:  worpress
+    app:  wordpress
     type: frontend
 spec:
   selector:
     matchLabels:
       app: wordpress
       type: frontend
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
@@ -29,21 +29,13 @@ spec:
           limits:
             cpu: 100m
             memory: 100Mi
-        livenessProbe: # garantindo que a pod estára UP quando estiver acesso na porta 80
-          tcpSocket:
-            port: 80
-          initialDelaySeconds: 5
-          timeoutSeconds: 5
-          successThreshold: 1
-          failureThreshold: 3
-          periodSeconds: 10
         env:
           - name: WORDPRESS_DB_HOST
             value: mysql:3306
           - name: WORDPRESS_DB_USER
             value: useradmin
           - name: WORDPRESS_DB_NAME
-            value: wordpress
+            value: wordpressdb
           - name: WORDPRESS_DB_PASSWORD # password por ser um dado sensível, a leitura é feita a partir do secret
             valueFrom:
               secretKeyRef:
@@ -58,5 +50,5 @@ spec:
       volumes:
         - name: wordpress-storage
           persistentVolumeClaim:
-            clainName: pv-clain-wordpress
+            claimName: pv-claim-wordpress
       restartPolicy: Always

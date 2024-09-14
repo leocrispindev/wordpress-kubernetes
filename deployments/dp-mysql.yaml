@@ -18,20 +18,20 @@ spec:
       - name: mysql
         image: mysql:8.0
         env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-secret
+              key: root-password
+        - name: MYSQL_DATABASE
+          value: wordpressdb
+        - name: MYSQL_USER
+          value: useradmin
         - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
               name: database-secret
               key: user-password
-        - name: MYSQL_DATABASE
-          value: wordpressdb
-        - name: MYSQL_USER
-          value: useradmin
-        - name: MYSQL_RANDOM_ROOT_PASSWORD
-          valueFrom:
-            secreyKeyRef:
-              name: database-secret
-              value: root-password
         ports:
         - containerPort: 3306
           name: mysql
@@ -41,4 +41,5 @@ spec:
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
-          claimName: pv-clain-mysql
+          claimName: pv-claim-mysql
+      restartPolicy: Always
