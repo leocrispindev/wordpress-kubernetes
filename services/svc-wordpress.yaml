@@ -7,7 +7,7 @@ spec:
   selector:
     app: wordpress
     type: frontend
-  type: ClusterIP
+  type: LoadBalancer
   ports:
   - name: http-sv-port
     protocol: TCP
