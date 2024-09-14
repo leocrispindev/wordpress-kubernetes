@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: PersistentVolumeClaim ## volume usado pelo pod
 metadata:
-  name: pv-clain-wordpress
+  name: pv-claim-wordpress
   namespace: microcontainers
   labels:
     app: vl-wordpress
 spec:
   storageClassName: manual
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   resources:
     requests:
       storage: 5Gi

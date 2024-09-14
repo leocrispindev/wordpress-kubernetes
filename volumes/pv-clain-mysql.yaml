@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: PersistentVolumeClaim ## volume usado pelo pod
 metadata:
-  name: pv-clain-mysql
+  name: pv-claim-mysql
   namespace: microcontainers
   labels:
     app: vl-mysql
 spec:
   storageClassName: manual
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   resources:
     requests:
       storage: 5Gi
