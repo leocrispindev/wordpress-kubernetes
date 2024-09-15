@@ -13,6 +13,10 @@ files=(
   "hpa/hpa-wordpress.yaml"
   "services/svc-wordpress.yaml"
 )
+
+echo "Baixando e instalando K3s"
+curl -sfL https://get.k3s.io | sh -
+
 kubectl create namespace microcontainers
 
 # Loop através do array e execute kubectl apply para cada arquivo
