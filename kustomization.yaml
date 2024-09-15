@@ -1,5 +1,6 @@
 # Exemplo de kustomization.yaml
 resources:
+  - namespaces/microcontainers.yaml
   - volumes/pv-mysql.yaml
   - volumes/pv-wordpress.yaml
   - volumes/pv-claim-mysql.yaml
