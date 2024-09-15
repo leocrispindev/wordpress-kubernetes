@@ -86,10 +86,10 @@ kubectl apply -f services/svc-wordpress.yaml -n microcontainers
 ```
 ```bash
 # Consultar services criados e portas expostas
-> kubectl get service  -n microcontainers
+kubectl get service  -n microcontainers
 ```
 ### Acesso ao Wordpress
 No navegador acessar o url http://localhost:8080
 * No primeiro acesso deverá visualizar a seguinte página:
 
-<img src="wordpress.png" alt="Logo do Projeto" width="300" height="150"/>
+<img src="wordpress.png" alt="Logo do Projeto" width="500" height="250"/>
