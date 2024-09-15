@@ -9,3 +9,7 @@ sudo chmod 644 /etc/rancher/k3s/k3s.yaml
 echo "Executando arquivo Kustomize - aplicando configurações do kubernetes"
 kubectl apply -k .
 
+wait
+
+kubectl get pod -n microcontainers -w
+
