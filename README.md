@@ -92,4 +92,4 @@ kubectl get service  -n microcontainers
 No navegador acessar o url http://localhost:8080
 * No primeiro acesso deverá visualizar a seguinte página:
 
-<img src="wordpress.png" alt="Logo do Projeto" width="500" height="250"/>
+<img src="images/wordpress.png" alt="Logo do Projeto" width="500" height="250"/>
