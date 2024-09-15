@@ -7,9 +7,10 @@ spec:
   selector:
     app: wordpress
     type: frontend
-  type: LoadBalancer
+  type: NodePort
   ports:
   - name: http-sv-port
     protocol: TCP
     port: 80
-    targetPort: http-port 
+    targetPort: http-port
+    nodePort: 8080

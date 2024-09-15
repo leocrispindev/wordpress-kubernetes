@@ -3,7 +3,19 @@
 ## Introdução
 Os arquivos YAML neste repositório são usados para definir diversos tipos de objetos Kubernetes, como Pods, Deployments, Services, ConfigMaps, Secrets, entre outros. Ao utilizar esses arquivos, você pode facilmente criar, atualizar e remover recursos em seu cluster Kubernetes.
 
+##  Premissas
+* Ter o K3s instalado na máquina
+* Ter o KUbectl instalado na máquina
+
 ## Passo a passo
+
+### Configurar o cluster
+É necessário criar o cluster dentro do k3s
+Exemplo usando o K3d responsável por gerenciar o K3s em ambiente Mac
+```bash
+k3d cluster create kubernetes-cluster
+```
+### Configuração do ambiente Wordpress
 
 1. Criar o namespace dentro do cluster Kubernetes:
 ```bash
@@ -24,10 +36,23 @@ kubectl apply -f volumes/pv-claim-mysql.yaml -n microcontainers
 kubectl apply -f volumes/pv-wordpress.yaml -n microcontainers
 kubectl apply -f volumes/pv-claim-wordpress.yaml -n microcontainers
 ```
+
+```bash
+ # Consultar volumes criados
+
+kubectl get PersistentVolume -n microcontainers
+kubectl get PersistentVolumeClaim -n microcontainers
+```
+
+
 3. Criar Secret com credenciais de acesso ao banco de dados:
 ```bash
 kubectl apply -f secrets/database-secret.yaml -n microcontainers
+
+# Consultar secret criado:
+kubectl get secret  -n microcontainers
 ```
+
 4. Deploy do banco de dados MySQL:
 ```bash
 kubectl apply -f deployments/dp-mysql.yaml -n microcontainers
@@ -44,13 +69,27 @@ kubectl apply -f services/svc-mysql.yaml -n microcontainers
 kubectl apply -f deployments/dp-wordpress.yaml -n microcontainers
 ```
 
+```bash
+#Consultar PODs criadas(Wordpress e Mysql)
+kubectl get pod -n microcontainers
+```
+
 7. Regra de escalabilidade das PODs do Wordpress:
 ```bash
 kubectl apply -f hpa/hpa-wordpress.yaml -n microcontainers
 ```
 
 8. Criar service do Wordpress:
-* Service do tipo LoadBalancer: permite acesso externo
+* Service do tipo NodePort: fazendo um bind da porta 8080 para a porta 80 dentro do cluster
 ```bash
 kubectl apply -f services/svc-wordpress.yaml -n microcontainers
 ```
+```bash
+# Consultar services criados e portas expostas
+> kubectl get service  -n microcontainers
+```
+### Acesso ao Wordpress
+No navegador acessar o url http://localhost:8080
+* No primeiro acesso deverá visualizar a seguinte página:
+
+<img src="wordpress.png" alt="Logo do Projeto" width="300" height="150"/>
